@@ -1,0 +1,4 @@
+staticSites:
+  - name: nolab-test-frontend
+    buildCommand: npm run build
+    publishPath: dist
