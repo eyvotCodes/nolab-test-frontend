@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
+import { DateTime } from 'luxon';
 import { fetchAllReservations } from '../services/reservationsApiService';
 
 
@@ -35,13 +36,13 @@ export default function ReservationsList() {
         />
       </div>
 
-      <DataTable value={reservations} paginator rows={10} stripedRows responsiveLayout="scroll">
+      <DataTable value={reservations} paginator rows={10} stripedRows>
         <Column field="id" header="ID" sortable />
-        <Column field="start_time" header="Inicio (UTC)" sortable />
-        <Column field="end_time" header="Fin (UTC)" sortable />
+        <Column field="start_time" header="Inicio" sortable body={(row) => DateTime.fromISO(row.start_time).toFormat('yyyy-MM-dd HH:mm')} />
+        <Column field="end_time" header="Fin" sortable body={(row) => DateTime.fromISO(row.end_time).toFormat('yyyy-MM-dd HH:mm')} />
         <Column field="priority" header="Prioridad" sortable />
         <Column field="projector_required" header="Proyector" body={row => (row.projector_required ? 'Sí' : 'No')} />
-        <Column field="capacity" header="Capacidad" sortable />
+        <Column field="capacity" header="Participantes" sortable />
         <Column field="timezone" header="Zona Horaria" />
       </DataTable>
     </div>

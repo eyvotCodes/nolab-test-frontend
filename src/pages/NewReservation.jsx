@@ -161,11 +161,11 @@ export default function NewReservation() {
             checked={form.projectorRequired}
             onChange={(e) => handleChange('projectorRequired', e.checked)}
           />
-          <label htmlFor="projector">Requiere proyector</label>
+          <label htmlFor="projector">Con proyector</label>
         </div>
 
         <div>
-          <label>Capacidad</label>
+          <label>Participantes</label>
           <InputNumber
             value={form.capacity}
             onValueChange={(e) => handleChange('capacity', e.value)}
@@ -176,7 +176,7 @@ export default function NewReservation() {
         </div>
 
         <div className="text-right">
-          <Button label="Guardar" icon="pi pi-check" onClick={handleSubmit} />
+          <Button label="Registrar" icon="pi pi-check" onClick={handleSubmit} />
         </div>
       </div>
     </div>
