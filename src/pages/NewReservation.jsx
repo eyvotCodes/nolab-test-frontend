@@ -10,24 +10,6 @@ import { DateTime } from 'luxon';
 
 import { fetchTimezones, fetchPriorities, createReservation } from '../services/reservationsApiService';
 
-const DURATIONS = [
-  { label: '15m', value: 15 },
-  { label: '30m', value: 30 },
-  { label: '45m', value: 45 },
-  { label: '1h', value: 60 },
-  { label: '1h 15m', value: 75 },
-  { label: '1h 30m', value: 90 },
-  { label: '1h 45m', value: 105 },
-  { label: '2h', value: 120 },
-  { label: '2h 15m', value: 135 },
-];
-
-function getNextQuarterHour() {
-  const now = DateTime.local().plus({ minutes: 1 });
-  const minute = now.minute;
-  const rounded = Math.ceil(minute / 15) * 15;
-  return now.set({ minute: rounded % 60, second: 0, millisecond: 0 }).plus({ hours: rounded >= 60 ? 1 : 0 }).toJSDate();
-}
 
 export default function NewReservation() {
   const toast = useRef(null);
@@ -45,10 +27,24 @@ export default function NewReservation() {
     capacity: 1
   });
 
+  const DURATIONS = [
+    { label: '15m', value: 15 },
+    { label: '30m', value: 30 },
+    { label: '45m', value: 45 },
+    { label: '1h', value: 60 },
+    { label: '1h 15m', value: 75 },
+    { label: '1h 30m', value: 90 },
+    { label: '1h 45m', value: 105 },
+    { label: '2h', value: 120 },
+    { label: '2h 15m', value: 135 },
+  ];
+
+
   useEffect(() => {
     fetchTimezones().then(setTimezones);
     fetchPriorities().then(setPriorities);
   }, []);
+
 
   const handleChange = (key, value) => {
     let newForm = { ...form, [key]: value };
@@ -70,7 +66,7 @@ export default function NewReservation() {
     try {
       await createReservation(form);
       toast.current.show({ severity: 'success', summary: 'Reservación creada', life: 3000 });
-      setTimeout(() => navigate('/'), 1000);
+      setTimeout(() => navigate('/'), 500);
     } catch (err) {
       toast.current.clear();
       toast.current.show({
@@ -90,6 +86,13 @@ export default function NewReservation() {
       });
     }
   };
+
+  function getNextQuarterHour() {
+    const now = DateTime.local().plus({ minutes: 1 });
+    const minute = now.minute;
+    const rounded = Math.ceil(minute / 15) * 15;
+    return now.set({ minute: rounded % 60, second: 0, millisecond: 0 }).plus({ hours: rounded >= 60 ? 1 : 0 }).toJSDate();
+  }
 
   return (
     <div className="p-4 max-w-xl mx-auto">
@@ -178,4 +181,5 @@ export default function NewReservation() {
       </div>
     </div>
   );
+
 }
