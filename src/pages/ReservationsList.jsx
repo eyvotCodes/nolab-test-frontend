@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
+import { Button } from 'primereact/button';
 import { fetchAllReservations } from '../services/reservationsApiService';
 
 
 export default function ReservationsList() {
   const [reservations, setReservations] = useState([]);
+  const navigate = useNavigate();
 
 
   useEffect(() => {
@@ -23,7 +26,14 @@ export default function ReservationsList() {
 
   return (
     <div className="p-4">
-      <h2 className="text-2xl mb-4">Reservaciones</h2>
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-2xl">Reservaciones</h2>
+        <Button
+          label="Nueva reservación"
+          icon="pi pi-plus"
+          onClick={() => navigate('/new')}
+        />
+      </div>
 
       <DataTable value={reservations} paginator rows={10} stripedRows responsiveLayout="scroll">
         <Column field="id" header="ID" sortable />
