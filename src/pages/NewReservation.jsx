@@ -9,6 +9,7 @@ import { Toast } from 'primereact/toast';
 
 import { fetchTimezones, fetchPriorities, createReservation } from '../services/reservationsApiService';
 
+
 export default function NewReservation() {
   const toast = useRef(null);
   const navigate = useNavigate();
@@ -39,6 +40,7 @@ export default function NewReservation() {
       toast.current.show({ severity: 'success', summary: 'Reservación creada', life: 3000 });
       setTimeout(() => navigate('/'), 1000);
     } catch (err) {
+        toast.current.clear();
         toast.current.show({
             sticky: true,
             closable: true,
@@ -121,6 +123,7 @@ export default function NewReservation() {
             onValueChange={(e) => handleChange('capacity', e.value)}
             min={1}
             max={8}
+            showButtons
           />
         </div>
 
@@ -130,4 +133,5 @@ export default function NewReservation() {
       </div>
     </div>
   );
+
 }
