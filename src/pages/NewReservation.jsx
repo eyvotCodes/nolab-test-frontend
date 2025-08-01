@@ -146,12 +146,13 @@ export default function NewReservation() {
         </div>
 
         <div>
-          <label>Prioridad</label>
-          <Dropdown
-            value={form.priority}
-            options={priorities}
-            onChange={(e) => handleChange('priority', e.value)}
-            placeholder="Selecciona prioridad"
+          <label>Participantes</label>
+          <InputNumber
+            value={form.capacity}
+            onValueChange={(e) => handleChange('capacity', e.value)}
+            min={1}
+            max={9}
+            showButtons
           />
         </div>
 
@@ -165,13 +166,12 @@ export default function NewReservation() {
         </div>
 
         <div>
-          <label>Participantes</label>
-          <InputNumber
-            value={form.capacity}
-            onValueChange={(e) => handleChange('capacity', e.value)}
-            min={1}
-            max={9}
-            showButtons
+          <label>Prioridad</label>
+          <Dropdown
+            value={form.priority}
+            options={priorities}
+            onChange={(e) => handleChange('priority', e.value)}
+            placeholder="Selecciona prioridad"
           />
         </div>
 

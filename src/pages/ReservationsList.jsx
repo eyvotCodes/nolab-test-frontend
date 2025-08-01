@@ -37,13 +37,13 @@ export default function ReservationsList() {
       </div>
 
       <DataTable value={reservations} paginator rows={10} stripedRows>
-        <Column field="id" header="ID" sortable />
+        <Column field="id" header="ID" sortable hidden />
         <Column field="start_time" header="Inicio" sortable body={(row) => DateTime.fromISO(row.start_time).toFormat('yyyy-MM-dd HH:mm')} />
         <Column field="end_time" header="Fin" sortable body={(row) => DateTime.fromISO(row.end_time).toFormat('yyyy-MM-dd HH:mm')} />
-        <Column field="priority" header="Prioridad" sortable />
-        <Column field="projector_required" header="Proyector" body={row => (row.projector_required ? 'Sí' : 'No')} />
+        <Column field="timezone" header="Zona Horaria" sortable />
         <Column field="capacity" header="Participantes" sortable />
-        <Column field="timezone" header="Zona Horaria" />
+        <Column field="projector_required" sortable header="Proyector" body={row => (row.projector_required ? 'Sí' : 'No')} />
+        <Column field="priority" header="Prioridad" sortable />
       </DataTable>
     </div>
   );
