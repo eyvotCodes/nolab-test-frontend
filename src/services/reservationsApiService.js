@@ -19,6 +19,12 @@ export async function fetchPriorities() {
   return res.json();
 }
 
+export async function fetchRooms() {
+  const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/rooms`);
+  if (!res.ok) throw new Error('Error al obtener salas');
+  return res.json();
+}
+
 export async function createReservation(data) {
   const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/reservations`, {
     method: 'POST',

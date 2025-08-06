@@ -8,7 +8,7 @@ import { Button } from 'primereact/button';
 import { Toast } from 'primereact/toast';
 import { DateTime } from 'luxon';
 
-import { fetchTimezones, fetchPriorities, createReservation } from '../services/reservationsApiService';
+import { fetchTimezones, fetchPriorities, fetchRooms, createReservation } from '../services/reservationsApiService';
 
 
 export default function NewReservation() {
@@ -17,6 +17,7 @@ export default function NewReservation() {
 
   const [timezones, setTimezones] = useState([]);
   const [priorities, setPriorities] = useState([]);
+  const [rooms, setRooms] = useState([]);
   const [form, setForm] = useState({
     startTime: getNextQuarterHour(),
     endTime: null,
@@ -24,7 +25,8 @@ export default function NewReservation() {
     timezone: 'America/Mexico_City',
     priority: 'normal',
     projectorRequired: false,
-    capacity: 1
+    capacity: 1,
+    room: 'Sala A'
   });
 
   const DURATIONS = [
@@ -43,6 +45,7 @@ export default function NewReservation() {
   useEffect(() => {
     fetchTimezones().then(setTimezones);
     fetchPriorities().then(setPriorities);
+    fetchRooms().then(setRooms);
   }, []);
 
 
@@ -146,12 +149,22 @@ export default function NewReservation() {
         </div>
 
         <div>
+          <label>Sala</label>
+          <Dropdown
+            value={form.room}
+            options={rooms.map(r => ({ label: r.name, value: r.name }))}
+            onChange={(e) => handleChange('room', e.value)}
+            placeholder="Selecciona sala"
+          />
+        </div>
+
+        <div>
           <label>Participantes</label>
           <InputNumber
             value={form.capacity}
             onValueChange={(e) => handleChange('capacity', e.value)}
             min={1}
-            max={9}
+            max={13}
             showButtons
           />
         </div>

@@ -41,6 +41,7 @@ export default function ReservationsList() {
         <Column field="start_time" header="Inicio" sortable body={(row) => DateTime.fromISO(row.start_time).toFormat('yyyy-MM-dd HH:mm')} />
         <Column field="end_time" header="Fin" sortable body={(row) => DateTime.fromISO(row.end_time).toFormat('yyyy-MM-dd HH:mm')} />
         <Column field="timezone" header="Zona Horaria" sortable />
+        <Column field="room" header="Sala" sortable />
         <Column field="capacity" header="Participantes" sortable />
         <Column field="projector_required" sortable header="Proyector" body={row => (row.projector_required ? 'Sí' : 'No')} />
         <Column field="priority" header="Prioridad" sortable />
