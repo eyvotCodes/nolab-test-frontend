@@ -71,6 +71,7 @@ export default function NewReservation() {
       toast.current.show({ severity: 'success', summary: 'Reservación creada', life: 3000 });
       setTimeout(() => navigate('/'), 500);
     } catch (err) {
+      const errorMessages = Array.isArray(err.errors) ? err.errors : [err.message];
       toast.current.clear();
       toast.current.show({
         sticky: true,
@@ -80,7 +81,7 @@ export default function NewReservation() {
           <div style={{ textAlign: 'left' }}>
             <strong>Se encontraron los siguientes errores:</strong>
             <ul>
-              {err.message.split(',').map((e, i) => (
+              {errorMessages.map((e, i) => (
                 <li key={i}>{e}</li>
               ))}
             </ul>

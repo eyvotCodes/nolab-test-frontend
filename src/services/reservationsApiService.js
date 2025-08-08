@@ -32,17 +32,17 @@ export async function createReservation(data) {
     body: JSON.stringify(data),
   });
 
+  const json = await res.json().catch(() => null);
   if (!res.ok) {
-    const contentType = res.headers.get('content-type');
+    const errs = Array.isArray(json?.errors)
+      ? json.errors
+      : [json?.message || `Error ${res.status}`];
 
-    if (contentType?.includes('application/json')) {
-      const errorJson = await res.json().catch(() => ({}));
-      throw new Error(errorJson.message || 'Error al crear reservación');
-    } else {
-      const fallbackText = await res.text();
-      throw new Error(`Error ${res.status}: ${fallbackText}`);
-    }
+    const e = new Error('ReservationError');
+    e.errors = errs;
+    e.status = res.status;
+    throw e;
   }
 
-  return await res.json(); // suponiendo que el backend devuelve la reservación creada
+  return json;
 }
